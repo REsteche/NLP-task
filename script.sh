@@ -1,14 +1,13 @@
 #!/bin/bash
 
-set -x
-flags="--debug --pretty --skip-questions"
+set -x flags="--debug --pretty --skip-questions"
 
 # define a model
 nha ${flags} model new \
 --name fly-clf-ruben \
 --desc "Intent classifier for travel information queries" \
 --model-file '{"name": "clf.pkl", "required": true, "desc": "Classifier saved as pickle", "max_mb": 1}' \
---data-file '{"name": "atlas_intents.csv"}' 
+--data-file '{"name": "atis_intents.csv"}' 
 # check it at nha model list, or specify with nha model list | grep ruben
 
 # record a dataset
@@ -30,7 +29,7 @@ nha ${flags} proj new \
 # build your project # now it's "dockerized" :)
 nha ${flags} proj build \
 --from-here
-# you can check it here using $ docker images or specify with docker images | grep  flowers  
+# you can check it here using $ docker images or specify with docker images | grep airplanes  
 
 # note that a docker image has been created for you
 docker images noronha/*airplanes*
@@ -56,7 +55,7 @@ nha ${flags} movers list
 nha ${flags} depl new \
 --name homolog \
 --nb notebooks/predict \
---port 30050 \
+--port 30051 \
 --movers fly-clf-ruben:experiment-v1 \
 --n-tasks 1 \
 && sleep 10
@@ -64,7 +63,7 @@ nha ${flags} depl new \
 # test your api (direct call to the service)
 curl -X POST \
 --data 'all flights from baltimore after 6 pm' \
-http://127.0.0.1:30050/predict \
+http://127.0.0.1:30051/predict \
 && echo
 
 # test your api (call through model router)
