@@ -62,7 +62,8 @@ nha ${flags} depl new \
 
 # test your api (direct call to the service)
 curl -X POST \
---data 'all flights from baltimore after 6 pm' \
+--data '{"data":"How far is new york to new jersey?"}' \
+-H '{"Content-Type": "application/json"}' \
 http://127.0.0.1:30051/predict \
 && echo
 
