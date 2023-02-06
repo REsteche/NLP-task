@@ -7,6 +7,7 @@ nha ${flags} model new \
 --name fly-clf-ruben \
 --desc "Intent classifier for travel information queries" \
 --model-file '{"name": "clf.pkl", "required": true, "desc": "Classifier saved as pickle", "max_mb": 1}' \
+--model-file '{"name": "vectorizer.pkl", "required": true, "desc": "Vectorizer saved as pickle", "max_mb": 1}' \
 --data-file '{"name": "atis_intents.csv"}' 
 # check it at nha model list, or specify with nha model list | grep ruben
 
@@ -16,7 +17,7 @@ nha ${flags} ds new \
 --model fly-clf-ruben \
 --details '{"extraction_date": "2023-02-02"}' \
 --path ./datasets/
-# check it at nha ds list
+# check it at nha ds listyy
 
 # create your project
 nha ${flags} proj new \
